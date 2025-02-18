@@ -1,12 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Currencyblock from './components/Currencyblock';
+import CurrencyBlock from './components/Currencyblock';
+import MortgageCalculator from './components/MortgageCalculator';
 
-export default function App() {
+function App() {
   return (
-    <div>
+    <Router>
       <Header />
-      <Currencyblock />
-    </div>
+      <Routes>
+        <Route path="/" element={<main />} />
+        <Route path="/mortgage" element={<MortgageCalculator />} />
+        <Route path="/converter" element={<CurrencyBlock />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
