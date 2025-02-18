@@ -9,10 +9,20 @@ export default function MortgageCalculator() {
   const [totalPayment, setTotalPayment] = useState(0);
   const [overpayment, setOverpayment] = useState(0);
 
+  const handleInputChange = (setter) => (e) => {
+    const value = parseFloat(e.target.value);
+    setter(isNaN(value) || value < 0 ? 0 : value);
+  };
+
   const calculateMortgage = () => {
+    if (loanAmount <= 0 || loanTerm <= 0 || interestRate < 0) {
+      alert('Введите корректные значения (больше 0)');
+      return;
+    }
+
     const principal = parseFloat(loanAmount);
     const annualRate = parseFloat(interestRate) / 100;
-    const months = parseInt(loanTerm) * 12; 
+    const months = parseInt(loanTerm) * 12;
     const monthlyRate = annualRate / 12;
 
     if (monthlyRate > 0) {
@@ -23,7 +33,6 @@ export default function MortgageCalculator() {
       setTotalPayment((monthly * months).toFixed(2));
       setOverpayment((monthly * months - principal).toFixed(2));
     } else {
-      // Если процентная ставка = 0%
       const monthly = principal / months;
       setMonthlyPayment(monthly.toFixed(2));
       setTotalPayment(principal.toFixed(2));
@@ -36,17 +45,13 @@ export default function MortgageCalculator() {
       <h2>Ипотечный калькулятор</h2>
       <div className="mortgage__inputs">
         <label>Сумма кредита (₽):</label>
-        <input type="number" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} />
+        <input type="number" value={loanAmount} onChange={handleInputChange(setLoanAmount)} />
 
         <label>Срок (лет):</label>
-        <input type="number" value={loanTerm} onChange={(e) => setLoanTerm(e.target.value)} />
+        <input type="number" value={loanTerm} onChange={handleInputChange(setLoanTerm)} />
 
         <label>Процентная ставка (%):</label>
-        <input
-          type="number"
-          value={interestRate}
-          onChange={(e) => setInterestRate(e.target.value)}
-        />
+        <input type="number" value={interestRate} onChange={handleInputChange(setInterestRate)} />
 
         <button onClick={calculateMortgage}>Рассчитать</button>
       </div>
