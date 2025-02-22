@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import '../scss/mortgagecalculator.scss';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Box,
+} from '@mui/material';
 
 export default function MortgageCalculator() {
   const [loanAmount, setLoanAmount] = useState(3000000);
@@ -41,33 +50,75 @@ export default function MortgageCalculator() {
   };
 
   return (
-    <div className="mortgage__container">
-      <h2>Ипотечный калькулятор</h2>
-      <div className="mortgage__inputs">
-        <label>Сумма кредита (₽):</label>
-        <input type="number" value={loanAmount} onChange={handleInputChange(setLoanAmount)} />
-
-        <label>Срок (лет):</label>
-        <input type="number" value={loanTerm} onChange={handleInputChange(setLoanTerm)} />
-
-        <label>Процентная ставка (%):</label>
-        <input type="number" value={interestRate} onChange={handleInputChange(setInterestRate)} />
-
-        <button onClick={calculateMortgage}>Рассчитать</button>
-      </div>
-
-      <div className="mortgage__results">
-        <h3>Результаты</h3>
-        <p>
-          📌 Ежемесячный платеж: <b>{monthlyPayment} ₽</b>
-        </p>
-        <p>
-          💰 Общая сумма выплат: <b>{totalPayment} ₽</b>
-        </p>
-        <p>
-          📉 Переплата по кредиту: <b>{overpayment} ₽</b>
-        </p>
-      </div>
-    </div>
+    <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Card sx={{ p: 3, boxShadow: 3, borderRadius: 2, bgcolor: 'background.paper' }}>
+        <CardContent>
+          <Typography
+            variant="h4"
+            gutterBottom
+            sx={{ fontWeight: 'bold', textAlign: 'center', color: '#1976d2' }}
+          >
+            Ипотечный калькулятор
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                label="Сумма кредита (₽)"
+                type="number"
+                fullWidth
+                variant="outlined"
+                value={loanAmount}
+                onChange={handleInputChange(setLoanAmount)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Срок (лет)"
+                type="number"
+                fullWidth
+                variant="outlined"
+                value={loanTerm}
+                onChange={handleInputChange(setLoanTerm)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Процентная ставка (%)"
+                type="number"
+                fullWidth
+                variant="outlined"
+                value={interestRate}
+                onChange={handleInputChange(setInterestRate)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={calculateMortgage}
+                sx={{ fontSize: '1rem', fontWeight: 'bold', mt: 2 }}
+              >
+                Рассчитать
+              </Button>
+            </Grid>
+          </Grid>
+          <Box sx={{ mt: 4, p: 2, bgcolor: '#f5f5f5', borderRadius: 2, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333' }}>
+              Результаты
+            </Typography>
+            <Typography sx={{ mt: 2 }}>
+              📌 Ежемесячный платеж: <b>{monthlyPayment} ₽</b>
+            </Typography>
+            <Typography>
+              💰 Общая сумма выплат: <b>{totalPayment} ₽</b>
+            </Typography>
+            <Typography>
+              📉 Переплата по кредиту: <b>{overpayment} ₽</b>
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+    </Container>
   );
 }
