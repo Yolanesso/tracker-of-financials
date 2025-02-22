@@ -16,6 +16,11 @@ export default function Header() {
               </Link>
             </li>
             <li className="nav__item">
+              <Link to="/Trecker" className="nav__link">
+                Трекер финансов
+              </Link>
+            </li>
+            <li className="nav__item">
               <Link to="/mortgage" className="nav__link">
                 Рассчитать ипотеку
               </Link>
